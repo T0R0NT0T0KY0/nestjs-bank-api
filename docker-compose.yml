@@ -1,0 +1,35 @@
+version: '3'
+services:
+#  app:
+#    build:
+#      context: .
+#      dockerfile: docker/node/Dockerfile
+#    ports:
+#      - 3000:3000
+#    env_file:
+#      - .env
+#    networks:
+#      - external
+#    depends_on:
+#      - postgres
+
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    volumes:
+      - ./pgdata/data:/var/lib/postgresql/data
+      - ./pgdata/init:/docker-entrypoint-initdb.d
+    ports:
+      - ${PG_PORT}:5432
+    environment:
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    networks:
+      - external
+
+networks:
+  external:
+    driver: bridge
+

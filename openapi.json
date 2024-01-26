@@ -1,0 +1,586 @@
+{
+	"openapi": "3.0.0",
+	"paths": {
+		"/api/auth/register": {
+			"post": {
+				"operationId": "AuthController_register",
+				"summary": "",
+				"description": "Register user",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegisterUserBodyDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "User register success"
+					}
+				},
+				"tags": [
+					"Auth"
+				]
+			}
+		},
+		"/api/auth/login": {
+			"post": {
+				"operationId": "AuthController_login",
+				"summary": "",
+				"description": "Login user",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginUserBodyDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/LoginUserDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				]
+			}
+		},
+		"/api/auth/refresh": {
+			"post": {
+				"operationId": "AuthController_refresh",
+				"summary": "",
+				"description": "Refresh token",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RefreshTokenUserBodyDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/RefreshUserDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				]
+			}
+		},
+		"/api/auth/logout": {
+			"post": {
+				"operationId": "AuthController_logout",
+				"summary": "",
+				"description": "Refresh token",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LogoutUserBodyDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Token refresh success"
+					}
+				},
+				"tags": [
+					"Auth"
+				]
+			}
+		},
+		"/api/payments": {
+			"post": {
+				"operationId": "PaymentsController_create",
+				"summary": "",
+				"description": "Create payment",
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePaymentDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/PaymentDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			},
+			"get": {
+				"operationId": "PaymentsController_getHistory",
+				"summary": "",
+				"description": "Get paymentBy id",
+				"parameters": [
+					{
+						"name": "limit",
+						"required": true,
+						"in": "query",
+						"schema": {
+							"minimum": 0,
+							"maximum": 100,
+							"default": 10,
+							"type": "number"
+						}
+					},
+					{
+						"name": "offset",
+						"required": true,
+						"in": "query",
+						"schema": {
+							"minimum": 0,
+							"default": 0,
+							"type": "number"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/PaymentDto"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			}
+		},
+		"/api/payments/balance": {
+			"get": {
+				"operationId": "PaymentsController_getBalance",
+				"summary": "",
+				"description": "Get balance",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/UserBalanceDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			}
+		},
+		"/api/payments/{paymentId}": {
+			"get": {
+				"operationId": "PaymentsController_getById",
+				"summary": "",
+				"description": "Get payment by id",
+				"parameters": [
+					{
+						"name": "paymentId",
+						"required": true,
+						"in": "path",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/PaymentDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			},
+			"delete": {
+				"operationId": "PaymentsController_cancel",
+				"summary": "",
+				"description": "Cancel payment",
+				"parameters": [
+					{
+						"name": "paymentId",
+						"required": true,
+						"in": "path",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/UserBalanceDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			},
+			"patch": {
+				"operationId": "PaymentsController_update",
+				"summary": "",
+				"description": "update payment",
+				"parameters": [
+					{
+						"name": "paymentId",
+						"required": true,
+						"in": "path",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePaymentDto"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"data": {
+											"$ref": "#/components/schemas/PaymentDto"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Payments"
+				]
+			}
+		}
+	},
+	"info": {
+		"title": "322 backend",
+		"description": "API docs",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"tags": [],
+	"servers": [],
+	"components": {
+		"schemas": {
+			"RegisterUserBodyDto": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string",
+						"minLength": 4,
+						"maxLength": 25
+					},
+					"password": {
+						"type": "string",
+						"minLength": 4,
+						"pattern": "((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				]
+			},
+			"LoginUserDto": {
+				"type": "object",
+				"properties": {
+					"accessToken": {
+						"type": "string"
+					},
+					"refreshToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"accessToken",
+					"refreshToken"
+				]
+			},
+			"LoginUserBodyDto": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				]
+			},
+			"RefreshUserDto": {
+				"type": "object",
+				"properties": {
+					"accessToken": {
+						"type": "string"
+					},
+					"refreshToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"accessToken",
+					"refreshToken"
+				]
+			},
+			"RefreshTokenUserBodyDto": {
+				"type": "object",
+				"properties": {
+					"refreshToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"refreshToken"
+				]
+			},
+			"LogoutUserBodyDto": {
+				"type": "object",
+				"properties": {
+					"refreshToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"refreshToken"
+				]
+			},
+			"PaymentDto": {
+				"type": "object",
+				"properties": {
+					"paymentId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"pending",
+							"success",
+							"refund",
+							"canceled"
+						]
+					},
+					"type": {
+						"type": "string"
+					},
+					"data": {
+						"type": "object"
+					}
+				},
+				"required": [
+					"paymentId",
+					"userId",
+					"amount",
+					"status",
+					"type",
+					"data"
+				]
+			},
+			"CreatePaymentDto": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "number",
+						"minimum": 1
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"income",
+							"withdrawal"
+						]
+					},
+					"data": {
+						"type": "object"
+					}
+				},
+				"required": [
+					"amount",
+					"type",
+					"data"
+				]
+			},
+			"UserBalanceDto": {
+				"type": "object",
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"balance": {
+						"type": "number"
+					}
+				},
+				"required": [
+					"userId",
+					"balance"
+				]
+			},
+			"UpdatePaymentDto": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "number",
+						"minimum": 1
+					},
+					"data": {
+						"type": "object"
+					}
+				}
+			},
+			"ErrorDto": {
+				"type": "object",
+				"properties": {
+					"statusCode": {
+						"type": "number",
+						"example": 400,
+						"description": "HTTP Статус код"
+					},
+					"timestamp": {
+						"type": "string",
+						"description": "Время",
+						"format": "date-time"
+					},
+					"path": {
+						"type": "string",
+						"description": "URL запроса"
+					},
+					"message": {
+						"type": "string",
+						"description": "Текст ошибки"
+					}
+				},
+				"required": [
+					"statusCode",
+					"timestamp",
+					"path",
+					"message"
+				]
+			},
+			"DataResponseDto": {
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"description": "Данные ответа"
+					}
+				},
+				"required": [
+					"data"
+				]
+			}
+		}
+	}
+}
